@@ -75,7 +75,7 @@ create(){
   this.anims.create({
     key: 'jena_lateral_swim',
     frames: this.anims.generateFrameNumbers('jena_lateral_swim', {start: 0, end: 5}),
-    frameRate: 7,
+    frameRate: 6,
     repeat: -1
   });
 
