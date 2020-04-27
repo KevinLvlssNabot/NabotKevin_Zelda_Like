@@ -1,5 +1,20 @@
 var oceland;
 var player;
 var cursors;
-var scrollnumber = 0;
+var scrollnumber = 1; // remettre a 0
 var idlenumber = 0;
+var bouees; var bouee;
+var algues; var algue;
+var corail;
+var vie = 3;
+var bulledevies; var bulledevie;
+var key; var keys;
+var rochers; var rocher;
+var meduses; var meduse;
+var etoiles; var etoile;
+var coquillages; var coquillage;
+var ennemis; var ennemi;
+var scrollers; var scroller;
+var money; var moneyCompte = 0;
+var moneyAffichage;
+var tourbillons; var tourbillon;
