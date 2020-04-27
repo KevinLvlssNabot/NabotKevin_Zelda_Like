@@ -34,6 +34,7 @@ preload(){
     this.load.image('etoile','assets/PNGsAssetsFixes/Etoile De Mer.png');
     this.load.image('coquillage','assets/PNGsAssetsFixes/Coquillage.png');
     this.load.image('coquillageMoney','assets/PNGsAssetsFixes/Coquillage (2).png');
+    this.load.image('oceland2','assets/PNGsAssetsFixes/Oceland3.png');
     this.load.spritesheet('tourbillon','assets/SpriteSheets/Tourbillon.png',{frameWidth: 167, frameHeight: 70});
     this.load.spritesheet('chateau','assets/SpriteSheets/MurChateaudeSable.png',{frameWidth: 1566, frameHeight: 584});
 // ennemis
@@ -136,7 +137,7 @@ create(){
       repeat: -1
     });
 //
-  oceland = this.add.sprite(400,300,'oceland').setScrollFactor(0.5); // creation environnement
+  oceland = this.add.image(400,300,'oceland2').setScrollFactor(0.5).setScale(0.25); // creation environnement
 //
   this.cameras.main.setZoom(2).setBounds(0,0,800,600); // zoom de la caméra
   this.cameras.main.setOrigin(1,0); // caméra centrée sur le premier plan du monde
@@ -528,9 +529,6 @@ create(){
 }
 
 update(){
-
-  // activation des animations
-    oceland.anims.play('ocelandAnimation', false);
   //
 
   if(cursors.left.isDown){ // mouvements du personnage

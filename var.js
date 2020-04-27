@@ -23,3 +23,4 @@ var chateau;
 var boueeJaunes; var boueeJaune;
 var medusesMovables; var meduseMovable;
 var gentilMr;
+var boss;
