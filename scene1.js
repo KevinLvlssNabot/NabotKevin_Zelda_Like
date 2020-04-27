@@ -22,6 +22,7 @@ preload(){
     this.load.image('scrollerVertical','assets/PNGsAssetsFixes/scrollerVertical.png');
     //
     this.load.image('bouee','assets/PNGsAssetsFixes/Bouée.png');
+    this.load.image('boueeJaune','assets/PNGsAssetsFixes/BouéeJaune.png');
     this.load.image('boueeVerticales','assets/PNGsAssetsFixes/BouéesJaunesVerticales.png');
     this.load.image('boueesHorizontales','assets/PNGsAssetsFixes/BoueesHorizontales.png');
     this.load.image('algue','assets/PNGsAssetsFixes/Algues.png');
@@ -34,10 +35,12 @@ preload(){
     this.load.image('coquillage','assets/PNGsAssetsFixes/Coquillage.png');
     this.load.image('coquillageMoney','assets/PNGsAssetsFixes/Coquillage (2).png');
     this.load.spritesheet('tourbillon','assets/SpriteSheets/Tourbillon.png',{frameWidth: 167, frameHeight: 70});
+    this.load.spritesheet('chateau','assets/SpriteSheets/MurChateaudeSable.png',{frameWidth: 1566, frameHeight: 584});
 // ennemis
     this.load.spritesheet('ennemisMoveFace','assets/SpriteSheets/EnnemisMoveFace.png',{frameWidth: 348, frameHeight: 350});
     this.load.spritesheet('ennemisMoveBack','assets/SpriteSheets/EnnemisMoveBack.png',{frameWidth: 348, frameHeight: 310});
     this.load.spritesheet('ennemisMoveSide','assets/SpriteSheets/EnnemisMoveSide.png',{frameWidth: 348, frameHeight: 300});
+    this.load.spritesheet('gentilMr','assets/SpriteSheets/GentilMr.png',{frameWidth: 348, frameHeight: 300});
   }
 //
 create(){
@@ -118,31 +121,58 @@ create(){
       frameRate: 4,
       repeat: -1
     });
+
+    this.anims.create({
+      key: 'chateau',
+      frames: this.anims.generateFrameNumbers('chateau', {start: 0, end: 3}),
+      frameRate: 1,
+      repeat: 0
+    });
+
+    this.anims.create({
+      key: 'gentilMr',
+      frames: this.anims.generateFrameNumbers('gentilMr', {start: 0, end: 1}),
+      frameRate: 2,
+      repeat: -1
+    });
 //
   oceland = this.add.sprite(400,300,'oceland').setScrollFactor(0.5); // creation environnement
 //
   this.cameras.main.setZoom(2).setBounds(0,0,800,600); // zoom de la caméra
-  this.cameras.main.setOrigin(0,0); // caméra centrée sur le premier plan du monde
+  this.cameras.main.setOrigin(1,0); // caméra centrée sur le premier plan du monde
 //
-  player = this.physics.add.sprite(200,240,'jena_idle').setScale(0.08).setSize(180,250).setOffset(40,15); // creation et definition des paramètres du personnage
+  player = this.physics.add.sprite(410,240,'jena_idle').setScale(0.08).setSize(180,250).setOffset(40,15); // creation et definition des paramètres du personnage
   player.setCollideWorldBounds(true);
   player.setBounce(0);
 //
   ennemis = this.physics.add.group({
   });
+  // ennemis 1.0
   ennemi = ennemis.get(140, 400, 'ennemisMoveFace').setScale(0.08).setSize(290,300).setOffset(28,28);
   ennemi = ennemis.get(260, 400, 'ennemisMoveFace').setScale(0.08).setSize(290,300).setOffset(28,28);
   ennemi = ennemis.get(140, 500, 'ennemisMoveFace').setScale(0.08).setSize(290,300).setOffset(28,28);
   ennemi = ennemis.get(260, 500, 'ennemisMoveFace').setScale(0.08).setSize(290,300).setOffset(28,28);
   ennemi = ennemis.get(380, 360, 'ennemisMoveFace').setScale(0.08).setSize(290,300).setOffset(28,28);
   ennemi = ennemis.get(150, 320, 'ennemisMoveFace').setScale(0.08).setSize(290,300).setOffset(28,28);
+  //ennemis 1.1
+  ennemi = ennemis.get(650, 325, 'ennemisMoveFace').setScale(0.08).setSize(290,300).setOffset(28,28);
+  ennemi = ennemis.get(450, 325, 'ennemisMoveSide').setScale(0.08).setSize(290,300).setOffset(28,28);
+  ennemi = ennemis.get(450, 525, 'ennemisMoveSide').setScale(0.08).setSize(290,300).setOffset(28,28);
+  // ennemis 0.1
+  ennemi = ennemis.get(560, 90, 'ennemisMoveSide').setScale(0.08).setSize(290,300).setOffset(28,28);
+  ennemi = ennemis.get(720, 125, 'ennemisMoveSide').setScale(0.08).setSize(290,300).setOffset(28,28);
   this.physics.add.collider(player, ennemis);
   this.physics.add.collider(ennemis, ennemis);
+//
+  gentilMr = this.physics.add.staticGroup();
+  gentilMr.create(785,235,'gentilMr').setScale(0.08).setSize(30,10).setOffset(160,150).anims.play('gentilMr').setFlipX(true);
+  this.physics.add.collider(player, gentilMr);
 //
   scrollers = this.physics.add.staticGroup();
   scroller = scrollers.create(210,298,'scrollerHorizontal');
   scroller = scrollers.create(405,430,'scrollerVertical');
   scroller = scrollers.create(405,120,'scrollerVertical');
+  scroller = scrollers.create(600,300,'scrollerHorizontal');
   this.physics.add.overlap(player,scrollers, scroll, null, this);
 //
   algues = this.physics.add.staticGroup(); // creation des groupes d'algues
@@ -162,8 +192,6 @@ create(){
   algue = algues.create(360,340,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
   algue = algues.create(390,330,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
   algue = algues.create(390,340,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
-  this.physics.add.collider(player, algues);
-  this.physics.add.collider(ennemis, algues);
   // Algues coin bas gauche du plan 1.0
   algue = algues.create(15,565,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
   algue = algues.create(15,575,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
@@ -191,6 +219,38 @@ create(){
   algue = algues.create(40,130,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
   algue = algues.create(40,140,'algue').setScale(0.08).setSize(25,7).setOffset(157,42).setFlipX(true);
   algue = algues.create(40,150,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  // algues 1.1
+  algue = algues.create(450,570,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(450,580,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(450,590,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(480,570,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(480,580,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(480,590,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(510,570,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(510,580,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(510,590,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  // algues 0.1
+  algue = algues.create(430,10,'algue').setScale(0.08).setSize(25,7).setOffset(157,42); // hautes
+  algue = algues.create(460,10,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(490,10,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(430,20,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(460,20,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(490,20,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(430,30,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(460,30,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(490,30,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  // basses
+  algue = algues.create(430,260,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(460,260,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(490,260,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(430,270,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(460,270,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(490,270,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(430,280,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(460,280,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  algue = algues.create(490,280,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
+  this.physics.add.collider(player, algues);
+  this.physics.add.collider(ennemis, algues);
 //
   corail = this.physics.add.staticGroup();
   corail.create(387,315,'corail').setScale(0.3).setSize(25,15).setOffset(30,20); // corail plan 1.0
@@ -212,6 +272,7 @@ create(){
   tourbillon = tourbillons.create(80, 105, 'tourbillon').anims.play('tourbillon').setScale(0.1).setSize(16,7).setOffset(76,32); // tourbillon 1
   tourbillon = tourbillons.create(85, 180, 'tourbillon').anims.play('tourbillon').setScale(0.1).setSize(16,7).setOffset(76,32);  // tourbilon 4
   tourbillon = tourbillons.create(115, 237, 'tourbillon').anims.play('tourbillon').setScale(0.1).setSize(16,7).setOffset(76,32); // tourbillon 3
+  tourbillon = tourbillons.create(210, 110, 'tourbillon').anims.play('tourbillon').setScale(0.1).setSize(16,7).setOffset(76,32); // tourbillon secret
   this.physics.add.overlap(player, tourbillons);
 //
   rochers = this.physics.add.staticGroup();
@@ -225,6 +286,7 @@ create(){
   rocher = rochers.create(340,550,'rochers').setScale(0.2).setSize(36,20).setOffset(75,40);
   rocher = rochers.create(340,530,'rochers').setScale(0.2).setSize(36,20).setOffset(75,40);
   rocher = rochers.create(300,550,'rochers').setScale(0.2).setSize(36,20).setOffset(75,40);
+  rocher = rochers.create(409,360,'rochers').setScale(0.2).setSize(36,20).setOffset(75,40);
   // rochers plan 0.0
   rocher = rochers.create(15,295,'rochers').setScale(0.2).setSize(36,20).setOffset(75,40);
   rocher = rochers.create(55,295,'rochers').setScale(0.2).setSize(36,20).setOffset(75,40);
@@ -234,12 +296,25 @@ create(){
   rocher = rochers.create(390,295,'rochers').setScale(0.2).setSize(36,20).setOffset(75,40).setFlipX(true);
   // Rocher central
   rocher = rochers.create(210,120,'rochers').setScale(0.5).setSize(75,25).setOffset(53,47);
+  // rochers 1.1
+  rocher = rochers.create(415,585,'rochers').setScale(0.2).setSize(36,20).setOffset(75,40).setFlipX(true);
+  rocher = rochers.create(415,560,'rochers').setScale(0.2).setSize(36,20).setOffset(75,40).setFlipX(true);
+  rocher = rochers.create(415,535,'rochers').setScale(0.2).setSize(36,20).setOffset(75,40).setFlipX(true);
+  rocher = rochers.create(415,510,'rochers').setScale(0.2).setSize(36,20).setOffset(75,40).setFlipX(true);
+  rocher = rochers.create(425,300,'rochers').setScale(0.2).setSize(36,20).setOffset(75,40).setFlipX(true);
+  rocher = rochers.create(460,300,'rochers').setScale(0.2).setSize(36,20).setOffset(75,40);
+  rocher = rochers.create(500,300,'rochers').setScale(0.2).setSize(36,20).setOffset(75,40);
+  rocher = rochers.create(705,300,'rochers').setScale(0.2).setSize(36,20).setOffset(75,40).setFlipX(true);
+  rocher = rochers.create(745,300,'rochers').setScale(0.2).setSize(36,20).setOffset(75,40);
+  rocher = rochers.create(785,300,'rochers').setScale(0.2).setSize(36,20).setOffset(75,40);
   this.physics.add.collider(player, rochers);
   this.physics.add.collider(ennemis, rochers);
 //
   keys = this.physics.add.staticGroup();
   key = keys.create(200,445,'key').setScale(0.15).setSize(7,13).setOffset(25,43); // clé 1.0
   key = keys.create(207,143,'key').setScale(0.15).setSize(7,13).setOffset(25,43); // clé 0.0
+  key = keys.create(570,580,'key').setScale(0.15).setSize(7,13).setOffset(25,43); // clé 1.1
+  key = keys.create(750,580,'key').setScale(0.15).setSize(7,13).setOffset(25,43); // clé 1.1
   this.physics.add.overlap(player, keys);
 //
   meduses = this.physics.add.staticGroup();
@@ -282,8 +357,51 @@ create(){
   meduse = meduses.create(100, 120,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
   meduse = meduses.create(105, 105,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
   meduse = meduses.create(100, 90,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  // meduses plan 1.1
+  meduse = meduses.create(680, 305,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 320,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 335,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 350,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 365,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 380,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 395,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 410,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 425,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 440,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 455,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 470,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 485,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 500,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 515,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 530,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 545,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 560,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 575,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 590,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(680, 605,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(415, 315,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(420, 330,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(420, 345,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
+  meduse = meduses.create(410, 490,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
   this.physics.add.collider(player, meduses);
   this.physics.add.collider(ennemis, meduses);
+  // meduses 1.0
+  medusesMovables = this.physics.add.group();
+  meduseMovable = medusesMovables.create(728, 110,'meduses').setScale(0.05);
+  meduseMovable = medusesMovables.create(743, 110,'meduses').setScale(0.05);
+  meduseMovable = medusesMovables.create(758, 110,'meduses').setScale(0.05);
+  meduseMovable = medusesMovables.create(773, 110,'meduses').setScale(0.05);
+  meduseMovable = medusesMovables.create(572, 70,'meduses').setScale(0.05);
+  meduseMovable = medusesMovables.create(587, 70,'meduses').setScale(0.05);
+  meduseMovable = medusesMovables.create(602, 70,'meduses').setScale(0.05);
+  meduseMovable = medusesMovables.create(617, 70,'meduses').setScale(0.05);
+  meduseMovable = medusesMovables.create(632, 70,'meduses').setScale(0.05);
+
+  this.physics.add.collider(player, medusesMovables);
+//
+  chateau = this.physics.add.staticGroup();
+  chateau.create(600, 5, 'chateau').setScale(0.08).setSize(125,100).setOffset(720,215);
+  this.physics.add.collider(player, chateau);
 //
   bouees = this.physics.add.staticGroup(); // Ajout des décors et objets visibles
   bouee = bouees.create(210,420,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
@@ -306,8 +424,6 @@ create(){
   bouee = bouees.create(120,180,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
   bouee = bouees.create(130,195,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
   bouee = bouees.create(140,210,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
-  this.physics.add.collider(player, bouees);
-  this.physics.add.collider(ennemis, bouees);
   // bouees haut gauche 0.0
   bouee = bouees.create(140,5,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
   bouee = bouees.create(130,20,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
@@ -333,8 +449,48 @@ create(){
   bouee = bouees.create(400,230,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
   bouee = bouees.create(400,245,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
   bouee = bouees.create(400,260,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
-
-
+  // bouees 1.1
+  bouee = bouees.create(590,540,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
+  bouee = bouees.create(570,540,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
+  bouee = bouees.create(550,540,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
+  bouee = bouees.create(600,555,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
+  bouee = bouees.create(600,570,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
+  bouee = bouees.create(600,585,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
+  bouee = bouees.create(540,555,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
+  bouee = bouees.create(540,570,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
+  bouee = bouees.create(540,585,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
+  this.physics.add.collider(player, bouees);
+  this.physics.add.collider(ennemis, bouees);
+//
+  boueecibles = this.physics.add.staticGroup(); // bouees jaunes 1.1
+  boueecible = boueecibles.create(770, 350, 'boueeJaune').setScale(0.15).setSize(17,25).setOffset(52,92);
+  boueecible = boueecibles.create(790, 430, 'boueeJaune').setScale(0.15).setSize(17,25).setOffset(52,92);
+  boueecible = boueecibles.create(760, 500, 'boueeJaune').setScale(0.15).setSize(17,25).setOffset(52,92);
+  boueecible = boueecibles.create(790, 580, 'boueeJaune').setScale(0.15).setSize(17,25).setOffset(52,92);
+//
+  boueeJaunes = this.physics.add.staticGroup(); // bouee jaunes 1.0
+  boueeJaune = boueeJaunes.create(770, 50, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(750, 50, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(730, 50, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(790, 60, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(710, 60, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(790, 70, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(710, 70, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(790, 80, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(710, 80, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(790, 90, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(710, 90, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(527, 0, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(527, 15, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(527, 30, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(673, 0, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(673, 15, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(673, 30, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(540, 40, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(660, 40, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(555, 50, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  boueeJaune = boueeJaunes.create(643, 50, 'boueeJaune').setScale(0.15).setSize(20,10).setOffset(50,108);
+  this.physics.add.collider(player, boueeJaunes);
 //
   etoiles = this.physics.add.group();
   etoile = etoiles.create(350,590,'etoile').setScale(0.2);
@@ -427,7 +583,18 @@ update(){
         child.body.velocity.y = 60;
     } else if (child.x <= 150 && child.y == 320) { // Ennemis haut
         child.body.velocity.x = 51;
+    } else if (child.x == 650 && child.y == 325) {
+        child.body.velocity.y = 52;
+    } else if (child.x == 450 && child.y == 325) {
+        child.body.velocity.x = 52;
+    } else if (child.x == 450 && child.y == 525) {
+        child.body.velocity.x = 52;
+    } else if (child.x == 560 && child.y == 90) {
+        child.body.velocity.x = 53;
+    } else if (child.x == 720 && child.y == 125) {
+        child.body.velocity.x = 54;
     }
+
       if (child.body.x < 130 && child.y <= 400 && child.body.velocity.x == -50) { // permet aux ennemis de changer de direction // Ennemis carré
           child.body.velocity.x = 0;
           child.body.velocity.y = 50;
@@ -446,6 +613,21 @@ update(){
       } else if (child.x >= 260 && child.y == 320 && child.body.velocity.x == 51) { // Ennemis haut
           child.body.velocity.x = -51;
           child.body.velocity.y = 0;
+      } else if (child.x == 650 && child.y >= 580 && child.body.velocity.y == 52) {
+        child.body.velocity.y = -52;
+        child.body.velocity.x = 0;
+      } else if (child.x >= 620 && child.y == 325 && child.body.velocity.x == 52){
+        child.body.velocity.y = 0;
+        child.body.velocity.x = -52;
+      } else if (child.x >= 620 && child.y == 525 && child.body.velocity.x == 52){
+        child.body.velocity.y = 0;
+        child.body.velocity.x = -52;
+      } else if (child.x >= 640 && child.y == 90 && child.body.velocity.x == 53) {
+        child.body.velocity.y = 0;
+        child.body.velocity.x = -53;
+      } else if (child.x >= 780 && child.y == 125 && child.body.velocity.x == 54) {
+        child.body.velocity.y = 0;
+        child.body.velocity.x = -54;
       }
 // Animations Ennemis
       if (child.body.velocity.y > 0) {

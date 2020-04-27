@@ -1,7 +1,7 @@
 var oceland;
 var player;
 var cursors;
-var scrollnumber = 1; // remettre a 0
+var scrollnumber = 2; // remettre a 0
 var idlenumber = 0;
 var bouees; var bouee;
 var algues; var algue;
@@ -18,3 +18,8 @@ var scrollers; var scroller;
 var money; var moneyCompte = 0;
 var moneyAffichage;
 var tourbillons; var tourbillon;
+var boueecibles; var boueecible;
+var chateau;
+var boueeJaunes; var boueeJaune;
+var medusesMovables; var meduseMovable;
+var gentilMr;
