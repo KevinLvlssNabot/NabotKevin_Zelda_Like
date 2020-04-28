@@ -2,6 +2,9 @@ var config = {
 	type: Phaser.AUTO,
 	width: 800,
 	height: 600,
+	input: {
+		gamepad: true
+	},
 physics: {
         default: 'arcade',
         arcade: {
@@ -10,7 +13,7 @@ physics: {
         }
     },
 
-scene: [Scene2] //Scene1
+scene: [Scene0, Scene1] //Scene1, scene2
 
 };
 
