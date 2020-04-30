@@ -13,7 +13,7 @@ physics: {
         }
     },
 
-scene: [Scene2, Scene3] //Scene1, scene2
+scene: [Scene0, Scene1, Scene2, Scene3] //Scene1, scene2
 
 };
 
