@@ -17,6 +17,10 @@ preload(){
     this.load.spritesheet('jena_swim_top','assets/SpriteSheets/JenaSwimtop.png',{frameWidth: 216, frameHeight: 200});
     this.load.spritesheet('jena_swim_bottom','assets/SpriteSheets/JenaSwimBottom2.png',{frameWidth: 180, frameHeight: 170});
     this.load.spritesheet('jena_lateral_swim','assets/SpriteSheets/JenaLateralSwim.png',{frameWidth: 300, frameHeight: 255});
+    this.load.spritesheet('jena_attack_side','assets/SpriteSheets/Jena_Attack_SideNB.png',{frameWidth: 300, frameHeight: 270});
+    this.load.spritesheet('jena_attack_top','assets/SpriteSheets/Jena_Attack_BackNB.png',{frameWidth: 274, frameHeight: 278});
+    this.load.spritesheet('jena_attack_bottom','assets/SpriteSheets/Jena_Attack_FrontNB.png',{frameWidth: 275, frameHeight: 500});
+    this.load.spritesheet('jena_attack_etoile_side','assets/SpriteSheets/Jena_Attack_Etoile_Side.png',{frameWidth: 268, frameHeight: 255});
     //
     this.load.image('scrollerHorizontal','assets/PNGsAssetsFixes/scrollerHorizontal.png');
     this.load.image('scrollerVertical','assets/PNGsAssetsFixes/scrollerVertical.png');
@@ -37,11 +41,19 @@ preload(){
     this.load.image('oceland2','assets/PNGsAssetsFixes/Oceland3.png');
     this.load.spritesheet('tourbillon','assets/SpriteSheets/Tourbillon.png',{frameWidth: 167, frameHeight: 70});
     this.load.spritesheet('chateau','assets/SpriteSheets/MurChateaudeSable.png',{frameWidth: 1566, frameHeight: 584});
+    this.load.spritesheet('etoileSpin','assets/SpriteSheets/Etoile.png',{frameWidth: 64, frameHeight: 60});
+    this.load.image('inventaire','assets/PNGsAssetsFixes/Inventaire.png');
+    this.load.image('choice','assets/PNGsAssetsFixes/Enlightment.png');
+    this.load.image('dialogue','assets/PNGsAssetsFixes/Dialogue.png');
+    this.load.image('flute','assets/PNGsAssetsFixes/Flute.png');
 // ennemis
     this.load.spritesheet('ennemisMoveFace','assets/SpriteSheets/EnnemisMoveFace.png',{frameWidth: 348, frameHeight: 350});
     this.load.spritesheet('ennemisMoveBack','assets/SpriteSheets/EnnemisMoveBack.png',{frameWidth: 348, frameHeight: 310});
     this.load.spritesheet('ennemisMoveSide','assets/SpriteSheets/EnnemisMoveSide.png',{frameWidth: 348, frameHeight: 300});
-    this.load.spritesheet('gentilMr','assets/SpriteSheets/GentilMr.png',{frameWidth: 348, frameHeight: 300});
+    this.load.spritesheet('ennemisAttackSide','assets/SpriteSheets/EnnemisAttackSide.png',{frameWidth: 388, frameHeight: 266});
+    this.load.spritesheet('ennemisAttackBack','assets/SpriteSheets/EnnemisAttackBack.png',{frameWidth: 405, frameHeight: 390});
+    this.load.spritesheet('ennemisAttackFront','assets/SpriteSheets/EnnemisAttackFront.png',{frameWidth: 310, frameHeight: 380});
+    this.load.spritesheet('gentilMr','assets/SpriteSheets/GentilMr.png',{frameWidth: 350, frameHeight: 300});
   }
 //
 create(){
@@ -117,6 +129,55 @@ create(){
     });
 
     this.anims.create({
+      key: 'ennemisAttackSide',
+      frames: this.anims.generateFrameNumbers('ennemisAttackSide', {start: 0, end: 1}),
+      frameRate: 2,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: 'ennemisAttackBack',
+      frames: this.anims.generateFrameNumbers('ennemisAttackBack', {start: 0, end: 1}),
+      frameRate: 2,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: 'ennemisAttackFront',
+      frames: this.anims.generateFrameNumbers('ennemisAttackFront', {start: 0, end: 1}),
+      frameRate: 2,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: 'jena_attack_side',
+      frames: this.anims.generateFrameNumbers('jena_attack_side', {start: 0, end: 9}),
+      frameRate: 50,
+      repeat: 0
+    });
+
+    this.anims.create({
+      key: 'jena_attack_top',
+      frames: this.anims.generateFrameNumbers('jena_attack_top', {start: 0, end: 4}),
+      frameRate: 50,
+      repeat: 0
+    });
+
+    this.anims.create({
+      key: 'jena_attack_bottom',
+      frames: this.anims.generateFrameNumbers('jena_attack_bottom', {start: 0, end: 4}),
+      frameRate: 50,
+      repeat: 0
+    });
+
+    this.anims.create({
+      key: 'jena_attack_etoile_side',
+      frames: this.anims.generateFrameNumbers('jena_attack_etoile_side', {start: 0, end: 1}),
+      frameRate: 20,
+      repeat: -1
+    });
+
+    this.anims.create({
       key: 'tourbillon',
       frames: this.anims.generateFrameNumbers('tourbillon', {start: 0, end: 1}),
       frameRate: 4,
@@ -136,13 +197,20 @@ create(){
       frameRate: 2,
       repeat: -1
     });
+
+    this.anims.create({
+      key: 'etoileSpin',
+      frames: this.anims.generateFrameNumbers('etoileSpin', {start: 0, end: 5}),
+      frameRate: 5,
+      repeat: -1
+    });
 //
   oceland = this.add.image(400,300,'oceland2').setScrollFactor(0.5).setScale(0.25); // creation environnement
 //
   this.cameras.main.setZoom(2).setBounds(0,0,800,600); // zoom de la caméra
-  this.cameras.main.setOrigin(1,0); // caméra centrée sur le premier plan du monde
+  this.cameras.main.setOrigin(0,1); // caméra centrée sur le premier plan du monde
 //
-  player = this.physics.add.sprite(410,240,'jena_idle').setScale(0.08).setSize(180,250).setOffset(40,15); // creation et definition des paramètres du personnage
+  player = this.physics.add.sprite(200,580,'jena_idle').setScale(0.08).setSize(180,250).setOffset(40,15); // creation et definition des paramètres du personnage
   player.setCollideWorldBounds(true);
   player.setBounce(0);
 //
@@ -162,18 +230,18 @@ create(){
   // ennemis 0.1
   ennemi = ennemis.get(560, 90, 'ennemisMoveSide').setScale(0.08).setSize(290,300).setOffset(28,28);
   ennemi = ennemis.get(720, 125, 'ennemisMoveSide').setScale(0.08).setSize(290,300).setOffset(28,28);
-  this.physics.add.collider(player, ennemis);
+  this.physics.add.collider(player, ennemis, kill, null, this);
   this.physics.add.collider(ennemis, ennemis);
 //
   gentilMr = this.physics.add.staticGroup();
   gentilMr.create(785,235,'gentilMr').setScale(0.08).setSize(30,10).setOffset(160,150).anims.play('gentilMr').setFlipX(true);
-  this.physics.add.collider(player, gentilMr);
+  this.physics.add.collider(player, gentilMr, offre, null, this);
 //
   scrollers = this.physics.add.staticGroup();
-  scroller = scrollers.create(210,298,'scrollerHorizontal');
-  scroller = scrollers.create(405,430,'scrollerVertical');
-  scroller = scrollers.create(405,120,'scrollerVertical');
-  scroller = scrollers.create(600,300,'scrollerHorizontal');
+  scroller = scrollers.create(210,298,'scrollerHorizontal').setVisible(false);
+  scroller = scrollers.create(405,430,'scrollerVertical').setVisible(false);
+  scroller = scrollers.create(405,120,'scrollerVertical').setVisible(false);
+  scroller = scrollers.create(600,300,'scrollerHorizontal').setVisible(false);
   this.physics.add.overlap(player,scrollers, scroll, null, this);
 //
   algues = this.physics.add.staticGroup(); // creation des groupes d'algues
@@ -250,14 +318,14 @@ create(){
   algue = algues.create(430,280,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
   algue = algues.create(460,280,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
   algue = algues.create(490,280,'algue').setScale(0.08).setSize(25,7).setOffset(157,42);
-  this.physics.add.collider(player, algues);
+  this.physics.add.collider(player, algues, plusDalgues, null, this);
   this.physics.add.collider(ennemis, algues);
 //
-  corail = this.physics.add.staticGroup();
-  corail.create(387,315,'corail').setScale(0.3).setSize(25,15).setOffset(30,20); // corail plan 1.0
+  coraux = this.physics.add.staticGroup();
+  corail = coraux.create(387,315,'corail').setScale(0.3).setSize(25,15).setOffset(30,20); // corail plan 1.0
   // corail plan 0.0
-  corail.create(70,70,'corail').setScale(0.3).setSize(25,15).setOffset(30,20).setFlipX(true);
-  this.physics.add.overlap(player, corail);
+  corail = coraux.create(70,70,'corail').setScale(0.3).setSize(25,15).setOffset(30,20).setFlipX(true);
+  this.physics.add.overlap(player, coraux, addInventaire, null, this);
 //
   tourbillons = this.physics.add.staticGroup();
   tourbillon = tourbillons.create(165, 237, 'tourbillon').anims.play('tourbillon').setScale(0.1).setSize(16,7).setOffset(76,32); // tourbillon 1
@@ -274,7 +342,7 @@ create(){
   tourbillon = tourbillons.create(85, 180, 'tourbillon').anims.play('tourbillon').setScale(0.1).setSize(16,7).setOffset(76,32);  // tourbilon 4
   tourbillon = tourbillons.create(115, 237, 'tourbillon').anims.play('tourbillon').setScale(0.1).setSize(16,7).setOffset(76,32); // tourbillon 3
   tourbillon = tourbillons.create(210, 110, 'tourbillon').anims.play('tourbillon').setScale(0.1).setSize(16,7).setOffset(76,32); // tourbillon secret
-  this.physics.add.overlap(player, tourbillons);
+  this.physics.add.overlap(player, tourbillons, teleportation, null, this);
 //
   rochers = this.physics.add.staticGroup();
   // rochers plan 1.0
@@ -315,8 +383,8 @@ create(){
   key = keys.create(200,445,'key').setScale(0.15).setSize(7,13).setOffset(25,43); // clé 1.0
   key = keys.create(207,143,'key').setScale(0.15).setSize(7,13).setOffset(25,43); // clé 0.0
   key = keys.create(570,580,'key').setScale(0.15).setSize(7,13).setOffset(25,43); // clé 1.1
-  key = keys.create(750,580,'key').setScale(0.15).setSize(7,13).setOffset(25,43); // clé 1.1
-  this.physics.add.overlap(player, keys);
+  key = keys.create(750,85,'key').setScale(0.15).setSize(7,13).setOffset(25,43); // clé 1.1
+  this.physics.add.overlap(player, keys, cléUp, null, this);
 //
   meduses = this.physics.add.staticGroup();
   meduse = meduses.create(15, 410,'meduses').setScale(0.1).setSize(27,11).setOffset(123,52);
@@ -388,21 +456,21 @@ create(){
   this.physics.add.collider(ennemis, meduses);
   // meduses 1.0
   medusesMovables = this.physics.add.group();
-  meduseMovable = medusesMovables.create(728, 110,'meduses').setScale(0.05);
-  meduseMovable = medusesMovables.create(743, 110,'meduses').setScale(0.05);
-  meduseMovable = medusesMovables.create(758, 110,'meduses').setScale(0.05);
-  meduseMovable = medusesMovables.create(773, 110,'meduses').setScale(0.05);
-  meduseMovable = medusesMovables.create(572, 70,'meduses').setScale(0.05);
-  meduseMovable = medusesMovables.create(587, 70,'meduses').setScale(0.05);
-  meduseMovable = medusesMovables.create(602, 70,'meduses').setScale(0.05);
-  meduseMovable = medusesMovables.create(617, 70,'meduses').setScale(0.05);
-  meduseMovable = medusesMovables.create(632, 70,'meduses').setScale(0.05);
+  meduseMovable = medusesMovables.create(728, 110,'meduses').setScale(0.05).setImmovable();
+  meduseMovable = medusesMovables.create(743, 110,'meduses').setScale(0.05).setImmovable();
+  meduseMovable = medusesMovables.create(758, 110,'meduses').setScale(0.05).setImmovable();
+  meduseMovable = medusesMovables.create(773, 110,'meduses').setScale(0.05).setImmovable();
+  meduseMovable = medusesMovables.create(572, 70,'meduses').setScale(0.05).setImmovable();
+  meduseMovable = medusesMovables.create(587, 70,'meduses').setScale(0.05).setImmovable();
+  meduseMovable = medusesMovables.create(602, 70,'meduses').setScale(0.05).setImmovable();
+  meduseMovable = medusesMovables.create(617, 70,'meduses').setScale(0.05).setImmovable();
+  meduseMovable = medusesMovables.create(632, 70,'meduses').setScale(0.05).setImmovable();
 
-  this.physics.add.collider(player, medusesMovables);
+  this.physics.add.collider(player, medusesMovables, fluteOnly, null, this);
 //
   chateau = this.physics.add.staticGroup();
   chateau.create(600, 5, 'chateau').setScale(0.08).setSize(125,100).setOffset(720,215);
-  this.physics.add.collider(player, chateau);
+  this.physics.add.collider(player, chateau, openSesame, null, this);
 //
   bouees = this.physics.add.staticGroup(); // Ajout des décors et objets visibles
   bouee = bouees.create(210,420,'bouee').setScale(0.15).setSize(20,10).setOffset(50,108);
@@ -495,7 +563,13 @@ create(){
 //
   etoiles = this.physics.add.group();
   etoile = etoiles.create(350,590,'etoile').setScale(0.2);
-  this.physics.add.overlap(player, etoiles);
+  this.physics.add.overlap(player, etoiles, rammassageEtoile, null, this);
+  this.physics.add.collider(ennemis, etoiles, plusDennemis, null, this);
+  this.physics.add.collider(rochers, etoiles, bounce, null, this);
+  this.physics.add.collider(algues, etoiles, bounce, null, this);
+  this.physics.add.collider(bouees, etoiles, bounce, null, this);
+  this.physics.add.collider(boueeJaunes, etoiles, bounce, null, this);
+  this.physics.add.collider(boueecibles, etoiles, bounce2, null, this);
 //
   coquillages = this.physics.add.staticGroup();
   // coquillage plan 1.0
@@ -512,44 +586,72 @@ create(){
   coquillage = coquillages.create(25, 40, 'coquillage').setScale(0.2).setSize(12,12).setOffset(24,25);
   coquillage = coquillages.create(40, 25, 'coquillage').setScale(0.2).setSize(12,12).setOffset(24,25);
   coquillage = coquillages.create(10, 55, 'coquillage').setScale(0.2).setSize(12,12).setOffset(24,25);
-  this.physics.add.overlap(player, coquillages);
+  this.physics.add.overlap(player, coquillages, banking, null, this);
 //
   bulledevies = this.add.group();
-   bulledevie = bulledevies.create(15, 315, 'bulledevie').setScale(0.2);
-   bulledevie = bulledevies.create(35, 315, 'bulledevie').setScale(0.2);
-   bulledevie = bulledevies.create(55, 315, 'bulledevie').setScale(0.2);
+   bulledevie1 = bulledevies.create(15, 315, 'bulledevie').setScale(0.2);
+   bulledevie2 = bulledevies.create(35, 315, 'bulledevie').setScale(0.2);
+   bulledevie3 = bulledevies.create(55, 315, 'bulledevie').setScale(0.2);
   // bulledevies.remove(bulledevie, true, true); POUR ENLEVER DES PV !
 //
   money = this.add.image(15,335,'coquillageMoney').setScale(0.25);
-  moneyAffichage = this.add.text(16,335, 'x' + moneyCompte, { fontFamily : 'Courrier New', fontSize: '12px', fill: '#fff' })
-
+  moneyAffichage = this.add.text(16,335, 'x' + moneyCompte, { fontFamily : 'Courrier New', fontSize: '12px', fill: '#fff' });
+//
+    inventaire = this.add.image(200,450,'inventaire').setVisible(false).setScale(0.5);
+    choice = this.add.image(145,431,'choice').setVisible(false).setScale(0.5);
+//  corail inventaire
+    corailImage = this.add.image(146, 431, 'corail').setScale(0.5).setVisible(false);
+    corailText = this.add.text(150,435, 'x' + nbreCoraux, { fontFamily : 'Courrier New', fontSize: '12px', fill: '#fff' }).setVisible(false);
+// etoile inventaire
+    etoileImage = this.add.image(182, 431, 'etoile').setScale(0.5).setVisible(false);
+//  clé inventaire
+    cléImage = this.add.image(219, 431, 'key').setScale(0.25).setVisible(false);
+    cléText = this.add.text(223,435, 'x' + nbreClé, { fontFamily : 'Courrier New', fontSize: '12px', fill: '#fff' }).setVisible(false);
+// flute inventaire
+    flute = this.add.image(246, 431, 'flute').setScale(0.25).setVisible(false);
 // Création des différents controles
     cursors = this.input.keyboard.createCursorKeys();
+    i = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);
+    enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+    space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    ctrl = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
+    echap = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+//
+    player.on('animationcomplete', animComplete, this);
+//
+  dialogue = this.add.image(200,550,'dialogue').setVisible(false).setScale(0.5);
+  text = this.add.text(15,535, '', { fontFamily : 'Linux Libertine Display G', fontSize: '12px', fill: '#fff'}).setWordWrapWidth(380, false).setVisible(false);
+  skip = this.add.text(300,580, 'ENTRER/Croix/A pour passer.',{ fontFamily : 'Linux Libertine Display G', fontSize: '8px', fill: '#fff'}).setVisible(false);
 //
 }
 
 update(){
   //
 
-  if(cursors.left.isDown){ // mouvements du personnage
+if (displayInventaire == 0 && offer == 0) {
+  if(cursors.left.isDown && !space.isDown){ // mouvements du personnage
     player.setFlipX(true);
     idlenumber = 2; // variable pour gérer les différentes animations "idle"
     player.anims.play('jena_lateral_swim', true);
     player.setVelocityX(-75);
-  }else if(cursors.right.isDown){
+    attack = 0;
+  }else if(cursors.right.isDown && !space.isDown){
     player.setFlipX(false);
     player.anims.play('jena_lateral_swim', true);
     idlenumber = 3;
     player.setVelocityX(75);
-  } else if(cursors.up.isDown){
+    attack = 0;
+  } else if(cursors.up.isDown && !space.isDown){
     player.anims.play('jena_swim_top', true);
     idlenumber = 1;
     player.setVelocityY(-75);
+    attack = 0;
   } else if(cursors.down.isDown){
     player.anims.play('jena_swim_bottom', true);
     player.setVelocityY(75);
     idlenumber = 0;
-  } else if (!cursors.left.isDown && !cursors.up.isDown && !cursors.right.isDown && !cursors.down.isDown){
+    attack = 0;
+  } else if (!cursors.left.isDown && !cursors.up.isDown && !cursors.right.isDown && !cursors.down.isDown && !space.isDown){
       if (idlenumber == 0) {
         player.anims.play('jena_idle', true);
       } else if (idlenumber == 1) {
@@ -564,8 +666,446 @@ update(){
     player.setVelocityX(0);
     player.setVelocityY(0);
   }
+}
+
+// animation attaque
+    if (Phaser.Input.Keyboard.JustDown(space)) {
+        attack = 1;
+        player.body.velocity.y = 0;
+        player.body.velocity.x = 0;
+      if (idlenumber == 2 || player.body.velocity.x < 0) {
+          player.anims.play('jena_attack_side', true);
+          player.setFlipX(true);
+          player.setSize(320,50).setOffset(-80,170);
+      } else if (idlenumber == 3 || player.body.velocity.x > 0) {
+          player.anims.play('jena_attack_side', true);
+          player.setFlipX(false);
+          player.setSize(320,50).setOffset(30,170);
+      } else if (idlenumber == 1 || player.body.velocity.y < 0) {
+          player.anims.play('jena_attack_top', true);
+          player.setSize(180,370).setOffset(40,-150);
+      } else if (idlenumber == 0 || player.body.velocity.y > 0) {
+          player.anims.play('jena_attack_bottom', true);
+          player.setSize(180,370).setOffset(40,100);
+      }
+    }
+// utilisation étoile
+      if (possessionEtoile == 1 && ctrl.isDown && etoileLancee == 0) {
+            rebond = 0;
+            etoileLancee = 1;
+            if (etoileLancee == 1) {
+              etoile = etoiles.create(player.x, player.y, 'etoile').setScale(0.2).setBounce(1).setCollideWorldBounds(true, bounce);
+            }
+              if (idlenumber == 2 || player.body.velocity.x < 0) {
+                  player.anims.play('jena_attack_etoile_side', true);
+                  player.setFlipX(true);
+                  etoile.setFlipX(true);
+                  etoile.body.velocity.x = -150;
+                  etoile.anims.play('etoileSpin', true);
+              } else if (idlenumber == 3 || player.body.velocity.x > 0) {
+                  player.anims.play('jena_attack_etoile_side', true);
+                  player.setFlipX(false);
+                  etoile.setFlipX(false);
+                  etoile.body.velocity.x = 150;
+                  etoile.anims.play('etoileSpin', true);
+              } else if (idlenumber == 0 || player.body.velocity.y > 0) {
+                  player.anims.play('jena_attack_bottom', true);
+                  etoile.body.velocity.y = 150;
+                  etoile.anims.play('etoileSpin', true);
+              } else if (idlenumber == 1 || player.body.velocity.y < 0) {
+                  player.anims.play('jena_attack_top', true);
+                  etoile.body.velocity.y = -150;
+                  etoile.anims.play('etoileSpin', true);
+              }
+      }
+          if (rebond == 1 || etoile.x > player.x + 250 || etoile.y > player.y + 250 || etoile.x < player.x - 250 || etoile.y < player.y - 250) {
+            rebond = 1;
+              this.physics.moveToObject(etoile, player, 150);
+          }
+
+// utilisation objets
+    if (displayInventaire == 1) {
+        if (choicePosition == 0) {
+            if (nbreCoraux > 0 && Phaser.Input.Keyboard.JustDown(enter) && pv < 3) {
+                nbreCoraux = nbreCoraux -1;
+                  corailText.setText('x' + nbreCoraux);
+                      if (pv == 1) {
+                          bulledevie2.visible = true;
+                          pv++;
+                      } else if (pv == 2) {
+                          bulledevie3.visible = true;
+                          pv++;
+                      }
+
+
+                      if (nbreCoraux == 0) {
+                          corailText.visible = false;
+                          corailImage.visible = false;
+                          corailText.setText('x' + nbreCoraux);
+                      }
+                  }
+            } else if (choicePosition == 3) {
+                if (achat == 1 && Phaser.Input.Keyboard.JustDown(enter)) {
+                    text.visible = true;
+                    skip.visible = true;
+                    dialogue.visible = true;
+                    text.setText("Vous jouez un morceau de flûte, les plus petites méduses s'éloignent.");
+                    displayInventaire = 0;
+                    inventaire.visible = false;
+                    choice.visible = false;
+                    flute.visible = false;
+                    corailText.visible = false;
+                    corailImage.visible = false;
+                    etoileImage.visible = false;
+                    cléImage.visible = false;
+                    cléText.visible = false;
+                    dialogue.x = 600, dialogue.y = 250;
+                    text.x = 415, text.y = 220;
+                    skip.x = 700, skip.y = 280;
+                        medusesMovables.children.iterate(function (child){
+                              child.body.velocity.x = 50;
+                        });
+                }
+            }
+      }
+
+    // Display inventaire
+      if (Phaser.Input.Keyboard.JustDown(i)){
+          if (displayInventaire == 0) {
+              inventaire.visible = true;
+              choice.visible = true;
+              displayInventaire = 1;
+            if (nbreCoraux > 0) {
+                corailText.visible = true;
+                corailImage.visible = true;
+            }
+            if (possessionEtoile == 1) {
+                etoileImage.visible = true;
+            }
+            if (nbreClé > 0) {
+                cléImage.visible = true;
+                cléText.visible = true;
+            }
+            if (achat == 1) {
+                flute.visible = true;
+            }
+          } else if (displayInventaire == 1) {
+              inventaire.visible = false;
+              choice.visible = false;
+              displayInventaire = 0;
+              corailText.visible = false;
+              corailImage.visible = false;
+              etoileImage.visible = false;
+              cléImage.visible = false;
+              cléText.visible = false;
+              flute.visible = false;
+
+          }
+      }
+// déplacement dans l'inventaire
+  if (displayInventaire == 1) {
+      if (choicePosition == 0) {
+        if (scrollnumber == 0) {
+            choice.x = 145, choice.y = 431;
+          } else if (scrollnumber == 1) {
+            choice.x = 145, choice.y = 131;
+          } else if (scrollnumber == 2) {
+            choice.x = 545, choice.y = 431;
+          } else if (scrollnumber == 3) {
+            choice.x = 545, choice.y = 131;
+          }
+            if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
+                choicePosition = 1;
+                    if (scrollnumber == 0) {
+                        choice.x = 182, choice.y = 431;
+                      } else if (scrollnumber == 1) {
+                        choice.x = 182, choice.y = 131;
+                      } else if (scrollnumber == 2) {
+                        choice.x = 582, choice.y = 431;
+                      } else if (scrollnumber == 3) {
+                        choice.x = 582, choice.y = 131;
+                      }
+            } else if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
+                choicePosition = 11;
+                    if (scrollnumber == 0) {
+                        choice.x = 256, choice.y = 505;
+                      } else if (scrollnumber == 1) {
+                        choice.x = 256, choice.y = 205;
+                      } else if (scrollnumber == 2) {
+                        choice.x = 656, choice.y = 505;
+                      } else if (scrollnumber == 3) {
+                        choice.x = 656, choice.y = 205;
+                      }
+            }
+      } else if (choicePosition == 1) {
+          if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
+              choicePosition = 2;
+                  if (scrollnumber == 0) {
+                    choice.x = 219, choice.y = 431;
+                  } else if (scrollnumber == 1) {
+                    choice.x = 219, choice.y = 131;
+                  } else if (scrollnumber == 2) {
+                    choice.x = 619, choice.y = 431;
+                  } else if (scrollnumber == 3) {
+                    choice.x = 619, choice.y = 131;
+                  }
+          } else if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
+              choicePosition = 0;
+                  if (scrollnumber == 0) {
+                    choice.x = 145, choice.y = 431;
+                  } else if (scrollnumber == 1) {
+                    choice.x = 145, choice.y = 131;
+                  } else if (scrollnumber == 2) {
+                    choice.x = 545, choice.y = 431;
+                  } else if (scrollnumber == 3) {
+                    choice.x = 545, choice.y = 131;
+                  }
+          }
+      } else if (choicePosition == 2) {
+        if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
+            choicePosition = 3;
+                if (scrollnumber == 0) {
+                  choice.x = 256, choice.y = 431;
+                } else if (scrollnumber == 1) {
+                  choice.x = 256, choice.y = 131;
+                } else if (scrollnumber == 2) {
+                  choice.x = 656, choice.y = 431;
+                } else if (scrollnumber == 3) {
+                  choice.x = 656, choice.y = 131;
+                }
+        } else if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
+            choicePosition = 1;
+                if (scrollnumber == 0) {
+                  choice.x = 182, choice.y = 431;
+                } else if (scrollnumber == 1) {
+                  choice.x = 182, choice.y = 131;
+                } else if (scrollnumber == 2) {
+                  choice.x = 582, choice.y = 431;
+                } else if (scrollnumber == 3) {
+                  choice.x = 582, choice.y = 131;
+                }
+        }
+      } else if (choicePosition == 3) {
+        if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
+            choicePosition = 4;
+                if (scrollnumber == 0) {
+                  choice.x = 145, choice.y = 468;
+                } else if (scrollnumber == 1) {
+                  choice.x = 145, choice.y = 168;
+                } else if (scrollnumber == 2) {
+                  choice.x = 545, choice.y = 468;
+                } else if (scrollnumber == 3) {
+                  choice.x = 545, choice.y = 168;
+                }
+        } else if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
+            choicePosition = 2;
+                if (scrollnumber == 0) {
+                  choice.x = 219, choice.y = 431;
+                } else if (scrollnumber == 1) {
+                  choice.x = 219, choice.y = 131;
+                } else if (scrollnumber == 2) {
+                  choice.x = 619, choice.y = 431;
+                } else if (scrollnumber == 3) {
+                  choice.x = 619, choice.y = 131;
+                }
+        }
+      } else if (choicePosition == 4) {
+        if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
+            choicePosition = 5;
+                if (scrollnumber == 0) {
+                  choice.x = 182, choice.y = 468;
+                } else if (scrollnumber == 1) {
+                  choice.x = 182, choice.y = 168;
+                } else if (scrollnumber == 2) {
+                  choice.x = 582, choice.y = 468;
+                } else if (scrollnumber == 3) {
+                  choice.x = 582, choice.y = 168;
+                }
+        } else if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
+            choicePosition = 3;
+                if (scrollnumber == 0) {
+                  choice.x = 256, choice.y = 431;
+                } else if (scrollnumber == 1) {
+                  choice.x = 256, choice.y = 131;
+                } else if (scrollnumber == 2) {
+                  choice.x = 656, choice.y = 431;
+                } else if (scrollnumber == 3) {
+                  choice.x = 656, choice.y = 131;
+                }
+        }
+      } else if (choicePosition == 5) {
+        if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
+            choicePosition = 6;
+                if (scrollnumber == 0) {
+                  choice.x = 219, choice.y = 468;
+                } else if (scrollnumber == 1) {
+                  choice.x = 219, choice.y = 168;
+                } else if (scrollnumber == 2) {
+                  choice.x = 619, choice.y = 468;
+                } else if (scrollnumber == 3) {
+                  choice.x = 619, choice.y = 168;
+                }
+        } else if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
+            choicePosition = 4;
+                if (scrollnumber == 0) {
+                  choice.x = 145, choice.y = 468;
+                } else if (scrollnumber == 1) {
+                  choice.x = 145, choice.y = 168;
+                } else if (scrollnumber == 2) {
+                  choice.x = 545, choice.y = 468;
+                } else if (scrollnumber == 3) {
+                  choice.x = 545, choice.y = 168;
+                }
+        }
+      } else if (choicePosition == 6) {
+        if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
+            choicePosition = 7;
+                if (scrollnumber == 0) {
+                  choice.x = 256, choice.y = 468;
+                } else if (scrollnumber == 1) {
+                  choice.x = 256, choice.y = 168;
+                } else if (scrollnumber == 2) {
+                  choice.x = 656, choice.y = 468;
+                } else if (scrollnumber == 3) {
+                  choice.x = 656, choice.y = 168;
+                }
+        } else if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
+            choicePosition = 5;
+                if (scrollnumber == 0) {
+                  choice.x = 182, choice.y = 468;
+                } else if (scrollnumber == 1) {
+                  choice.x = 182, choice.y = 168;
+                } else if (scrollnumber == 2) {
+                  choice.x = 582, choice.y = 468;
+                } else if (scrollnumber == 3) {
+                  choice.x = 582, choice.y = 168;
+                }
+        }
+      } else if (choicePosition == 7) {
+        if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
+            choicePosition = 8;
+                if (scrollnumber == 0) {
+                  choice.x = 145, choice.y = 505;
+                } else if (scrollnumber == 1) {
+                  choice.x = 145, choice.y = 205;
+                } else if (scrollnumber == 2) {
+                  choice.x = 545, choice.y = 505;
+                } else if (scrollnumber == 3) {
+                  choice.x = 545, choice.y = 205;
+                }
+        } else if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
+            choicePosition = 6;
+                if (scrollnumber == 0) {
+                  choice.x = 219, choice.y = 468;
+                } else if (scrollnumber == 1) {
+                  choice.x = 219, choice.y = 168;
+                } else if (scrollnumber == 2) {
+                  choice.x = 619, choice.y = 468;
+                } else if (scrollnumber == 3) {
+                  choice.x = 619, choice.y = 168;
+                }
+        }
+      } else if (choicePosition == 8) {
+        if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
+            choicePosition = 9;
+                if (scrollnumber == 0) {
+                  choice.x = 182, choice.y = 505;
+                } else if (scrollnumber == 1) {
+                  choice.x = 182, choice.y = 205;
+                } else if (scrollnumber == 2) {
+                  choice.x = 582, choice.y = 505;
+                } else if (scrollnumber == 3) {
+                  choice.x = 582, choice.y = 205;
+                }
+        } else if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
+            choicePosition = 7;
+                if (scrollnumber == 0) {
+                  choice.x = 256, choice.y = 468;
+                } else if (scrollnumber == 1) {
+                  choice.x = 256, choice.y = 168;
+                } else if (scrollnumber == 2) {
+                  choice.x = 656, choice.y = 468;
+                } else if (scrollnumber == 3) {
+                  choice.x = 656, choice.y = 168;
+                }
+        }
+      } else if (choicePosition == 9) {
+        if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
+            choicePosition = 10;
+                if (scrollnumber == 0) {
+                  choice.x = 219, choice.y = 505;
+                } else if (scrollnumber == 1) {
+                  choice.x = 219, choice.y = 205;
+                } else if (scrollnumber == 2) {
+                  choice.x = 619, choice.y = 505;
+                } else if (scrollnumber == 3) {
+                  choice.x = 619, choice.y = 205;
+                }
+        } else if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
+            choicePosition = 8;
+                if (scrollnumber == 0) {
+                  choice.x = 145, choice.y = 505;
+                } else if (scrollnumber == 1) {
+                  choice.x = 145, choice.y = 205;
+                } else if (scrollnumber == 2) {
+                  choice.x = 545, choice.y = 505;
+                } else if (scrollnumber == 3) {
+                  choice.x = 545, choice.y = 205;
+                }
+        }
+      } else if (choicePosition == 10) {
+        if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
+            choicePosition = 11;
+                if (scrollnumber == 0) {
+                  choice.x = 256, choice.y = 505;
+                } else if (scrollnumber == 1) {
+                  choice.x = 256, choice.y = 205;
+                } else if (scrollnumber == 2) {
+                  choice.x = 656, choice.y = 505;
+                } else if (scrollnumber == 3) {
+                  choice.x = 656, choice.y = 205;
+                }
+        } else if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
+            choicePosition = 9;
+                if (scrollnumber == 0) {
+                  choice.x = 182, choice.y = 505;
+                } else if (scrollnumber == 1) {
+                  choice.x = 182, choice.y = 205;
+                } else if (scrollnumber == 2) {
+                  choice.x = 582, choice.y = 505;
+                } else if (scrollnumber == 3) {
+                  choice.x = 582, choice.y = 205;
+                }
+        }
+      } else if (choicePosition == 11) {
+        if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
+            choicePosition = 0;
+                if (scrollnumber == 0) {
+                  choice.x = 145, choice.y = 431;
+                } else if (scrollnumber == 1) {
+                  choice.x = 145, choice.y = 131;
+                } else if (scrollnumber == 2) {
+                  choice.x = 545, choice.y = 431;
+                } else if (scrollnumber == 3) {
+                  choice.x = 545, choice.y = 131;
+                }
+        } else if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
+            choicePosition = 10;
+                if (scrollnumber == 0) {
+                  choice.x = 219, choice.y = 505;
+                } else if (scrollnumber == 1) {
+                  choice.x = 219, choice.y = 205;
+                } else if (scrollnumber == 2) {
+                  choice.x = 619, choice.y = 505;
+                } else if (scrollnumber == 3) {
+                  choice.x = 619, choice.y = 205;
+                }
+        }
+      }
+  }
+//
+
 // Déplacements ennemis
-// Phaser.Actions.RotateAroundDistance(ennemis.getChildren(), { x: 400, y: 300 }, 0.02, 200);
 
   ennemis.children.iterate(function (child){
     child.setCollideWorldBounds(true);
@@ -630,20 +1170,101 @@ update(){
 // Animations Ennemis
       if (child.body.velocity.y > 0) {
         child.anims.play('ennemisMoveFace', true);
+        child.setSize(290,300).setOffset(28,28);
       } else if (child.body.velocity.y < 0) {
         child.anims.play('ennemisMoveBack', true);
+        child.setSize(290,300).setOffset(28,28);
       } else if (child.body.velocity.y == 0) {
           if (child.body.velocity.x > 0) {
               child.anims.play('ennemisMoveSide', true);
               child.setFlipX(false);
+              child.setSize(290,300).setOffset(28,28);
           } else if (child.body.velocity.x < 0) {
               child.anims.play('ennemisMoveSide', true);
               child.setFlipX(true);
+              child.setSize(290,300).setOffset(28,28);
           }
       }
 
   });
+// attaques ennemis
+  ennemis.children.iterate(function (child){
+        if (child.body.velocity.x >= 0 && child.x >= player.x - 25 && child.y >= player.y - 10 && child.y <= player.y + 10 && player.x > child.x) {
+              child.anims.play('ennemisAttackSide', true);
+              child.setFlipX(false);
+              child.setSize(390,300).setOffset(28,28);
+        } else if (child.body.velocity.x <= 0 && child.x >= player.x + 10 && child.y >= player.y - 10 && child.y <= player.y + 10 && player.x < child.x) {
+              child.anims.play('ennemisAttackSide', true);
+              child.setFlipX(true);
+              child.setSize(390,300).setOffset(-60,28);
+        } else if (child.y >= player.y - 30 && child.x >= player.x - 10 && child.x <= player.x + 10 && player.y > child.y) {
+              child.anims.play('ennemisAttackFront', true);
+              child.setFlipX(true);
+              child.setSize(290,320).setOffset(28,50);
+        } else if (child.y >= player.y + 10 && child.x >= player.x - 10 && child.x <= player.x + 10 && player.y < child.y) {
+              child.anims.play('ennemisAttackBack', true);
+              child.setFlipX(true);
+              child.setSize(290,320).setOffset(28,-50);
+        }
+
+  });
+
+  if (nbreKill == 5){ // resolution enigme 1
+        bouees.children.iterate(function (child){
+              if (child.x < 400 && child.y > 300) {
+                    child.disableBody(true, true);
+              }
+        });
+  }
+// résolution énigme 2
+  if (boueesTouchees == 4) {
+    bouees.children.iterate(function (child){
+          if (child.x > 400 && child.y > 300) {
+                child.disableBody(true, true);
+          }
+    });
+  }
 //
+    if (enter.isDown && offer == 0) {
+      dialogue.visible = false;
+      text.visible = false;
+      skip.visible = false;
+    }
+
+
+    if (Phaser.Input.Keyboard.JustDown(enter) && offer > 0) {
+      offer ++;
+    if (offer == 2) {
+      if (moneyCompte >= 10) {
+      text.setText("Qu'en pensez-vous ? ENTRER/Croix/A pour accepter, ECHAP/Rond/B pour refuser");
+        offer = 3;
+  } else if (moneyCompte < 10) {
+      text.setText("Oh mais vous ne possédez pas la somme qu'il faut, revenez me voir plus tard.");
+        offer = 4;
+    }
+  } else if (offer == 4) {
+    text.setText("Voila pour vous, bon courage. Vous obtenez une flûte mystérieuse, il paraît que le son qu'elle emet permet d'écarter les plus petites méduses. Vous pouvez l'utiliser depuis votre inventaire.");
+    achat = 1;
+    moneyCompte = moneyCompte - 10;
+    moneyAffichage.setText("x" + moneyCompte);
+  } else if (offer >= 5) {
+          offer = 0;
+          dialogue.visible = false;
+          text.visible = false;
+          skip.visible = false;
+        }
 }
+        if (offer == 3) {
+              if (echap.isDown) {
+                offer = 0;
+                dialogue.visible = false;
+                text.visible = false;
+                skip.visible = false;
+              }
+        }
+
+
+
+} // accolade fin update
 
 }

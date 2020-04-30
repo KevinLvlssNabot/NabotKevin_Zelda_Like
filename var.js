@@ -1,13 +1,13 @@
 var oceland;
 var player;
 var cursors;
-var scrollnumber = 2; // remettre a 0
+var scrollnumber = 0; // remettre a 0
 var idlenumber = 0;
 var bouees; var bouee;
 var algues; var algue;
-var corail;
-var vie = 3;
-var bulledevies; var bulledevie;
+var corail; var coraux; var corailImage;
+var pv = 3;
+var bulledevies; var bulledevie1; var bulledevie2; var bulledevie3;
 var key; var keys;
 var rochers; var rocher;
 var meduses; var meduse;
@@ -29,5 +29,16 @@ var inventaire; var displayInventaire = 0; var choice; var choicePosition = 0;
 var gamepad;
 var text; var skip;
 var tuto = 1;
-var enter; var i; var space;
+var enter; var i; var space; var ctrl; var echap;
 var attack = 0;
+var drop;
+var corailText; var nbreCoraux = 0;
+var possessionEtoile = 0; var etoileLancee = 0; var etoileImage;
+var rebond;
+var nbreKill = 0; var nbreClé = 0; var cléImage; var cléText;
+var boueesTouchees = 0; var intouchable1 = 0; var intouchable2 = 0; var intouchable3 = 0; var intouchable4 = 0;
+var offer = 0; var achat = 0;
+var flute;
+var passe = 0;
+var pvBoss = 3;
+var textFinal;

@@ -9,15 +9,15 @@ init(data){
 
 
 preload(){
-  this.load.spritesheet('jena_idle','assets/SpriteSheets/Jena_NB.png',{frameWidth: 253, frameHeight: 300});
-  this.load.spritesheet('jena_idle_droite','assets/SpriteSheets/Jena_IdleSide_NB.png',{frameWidth: 150, frameHeight: 272});
-  this.load.spritesheet('jena_idle_top','assets/SpriteSheets/Jena_IdleTop_NB.png',{frameWidth: 253, frameHeight: 300});
-  this.load.spritesheet('jena_swim_top','assets/SpriteSheets/JenaSwimtopNB.png',{frameWidth: 216, frameHeight: 200});
-  this.load.spritesheet('jena_swim_bottom','assets/SpriteSheets/JenaSwimBottom2NB.png',{frameWidth: 180, frameHeight: 170});
-  this.load.spritesheet('jena_lateral_swim','assets/SpriteSheets/JenaLateralSwimNB.png',{frameWidth: 300, frameHeight: 255});
-  this.load.spritesheet('jena_attack_side','assets/SpriteSheets/Jena_Attack_SideNB.png',{frameWidth: 300, frameHeight: 270});
-  this.load.spritesheet('jena_attack_top','assets/SpriteSheets/Jena_Attack_BackNB.png',{frameWidth: 274, frameHeight: 278});
-  this.load.spritesheet('jena_attack_bottom','assets/SpriteSheets/Jena_Attack_FrontNB.png',{frameWidth: 275, frameHeight: 500});
+  this.load.spritesheet('jena_idleNB','assets/SpriteSheets/Jena_NB.png',{frameWidth: 253, frameHeight: 300});
+  this.load.spritesheet('jena_idle_droiteNB','assets/SpriteSheets/Jena_IdleSide_NB.png',{frameWidth: 150, frameHeight: 272});
+  this.load.spritesheet('jena_idle_topNB','assets/SpriteSheets/Jena_IdleTop_NB.png',{frameWidth: 253, frameHeight: 300});
+  this.load.spritesheet('jena_swim_topNB','assets/SpriteSheets/JenaSwimtopNB.png',{frameWidth: 216, frameHeight: 200});
+  this.load.spritesheet('jena_swim_bottomNB','assets/SpriteSheets/JenaSwimBottom2NB.png',{frameWidth: 180, frameHeight: 170});
+  this.load.spritesheet('jena_lateral_swimNB','assets/SpriteSheets/JenaLateralSwimNB.png',{frameWidth: 300, frameHeight: 255});
+  this.load.spritesheet('jena_attack_sideNB','assets/SpriteSheets/Jena_Attack_SideNB.png',{frameWidth: 300, frameHeight: 270});
+  this.load.spritesheet('jena_attack_topNB','assets/SpriteSheets/Jena_Attack_BackNB.png',{frameWidth: 274, frameHeight: 278});
+  this.load.spritesheet('jena_attack_bottomNB','assets/SpriteSheets/Jena_Attack_FrontNB.png',{frameWidth: 275, frameHeight: 500});
 //
   this.load.image('bulledevieNB','assets/PNGsAssetsFixes/BulleNB.png');
   this.load.image('coquillageNB','assets/PNGsAssetsFixes/CoquillageNB.png');
@@ -36,64 +36,64 @@ preload(){
 
 create(){
   this.anims.create({
-    key: 'jena_idle',
-    frames: this.anims.generateFrameNumbers('jena_idle', {start: 0, end: 1}),
+    key: 'jena_idleNB',
+    frames: this.anims.generateFrameNumbers('jena_idleNB', {start: 0, end: 1}),
     frameRate: 2,
     repeat: -1
   });
 
   this.anims.create({
-    key: 'jena_idle_droite',
-    frames: this.anims.generateFrameNumbers('jena_idle_droite', {start: 0, end: 3}),
+    key: 'jena_idle_droiteNB',
+    frames: this.anims.generateFrameNumbers('jena_idle_droiteNB', {start: 0, end: 3}),
     frameRate: 4,
     repeat: -1
   });
 
   this.anims.create({
-    key: 'jena_idle_top',
-    frames: this.anims.generateFrameNumbers('jena_idle_top', {start: 0, end: 1}),
+    key: 'jena_idle_topNB',
+    frames: this.anims.generateFrameNumbers('jena_idle_topNB', {start: 0, end: 1}),
     frameRate: 2,
     repeat: -1
   });
 
   this.anims.create({
-    key: 'jena_swim_top',
-    frames: this.anims.generateFrameNumbers('jena_swim_top', {start: 0, end: 9}),
+    key: 'jena_swim_topNB',
+    frames: this.anims.generateFrameNumbers('jena_swim_topNB', {start: 0, end: 9}),
     frameRate: 7,
     repeat: -1
   });
 
   this.anims.create({
-    key: 'jena_lateral_swim',
-    frames: this.anims.generateFrameNumbers('jena_lateral_swim', {start: 0, end: 5}),
+    key: 'jena_lateral_swimNB',
+    frames: this.anims.generateFrameNumbers('jena_lateral_swimNB', {start: 0, end: 5}),
     frameRate: 6,
     repeat: -1
   });
 
   this.anims.create({
-    key: 'jena_swim_bottom',
-    frames: this.anims.generateFrameNumbers('jena_swim_bottom', {start: 0, end: 9}),
+    key: 'jena_swim_bottomNB',
+    frames: this.anims.generateFrameNumbers('jena_swim_bottomNB', {start: 0, end: 9}),
     frameRate: 7,
     repeat: -1
   });
 
   this.anims.create({
-    key: 'jena_attack_side',
-    frames: this.anims.generateFrameNumbers('jena_attack_side', {start: 0, end: 9}),
+    key: 'jena_attack_sideNB',
+    frames: this.anims.generateFrameNumbers('jena_attack_sideNB', {start: 0, end: 9}),
     frameRate: 50,
     repeat: 0
   });
 
   this.anims.create({
-    key: 'jena_attack_top',
-    frames: this.anims.generateFrameNumbers('jena_attack_top', {start: 0, end: 4}),
+    key: 'jena_attack_topNB',
+    frames: this.anims.generateFrameNumbers('jena_attack_topNB', {start: 0, end: 4}),
     frameRate: 50,
     repeat: 0
   });
 
   this.anims.create({
-    key: 'jena_attack_bottom',
-    frames: this.anims.generateFrameNumbers('jena_attack_bottom', {start: 0, end: 4}),
+    key: 'jena_attack_bottomNB',
+    frames: this.anims.generateFrameNumbers('jena_attack_bottomNB', {start: 0, end: 4}),
     frameRate: 50,
     repeat: 0
   });
@@ -107,7 +107,7 @@ create(){
 //
   oceland = this.add.image(400,300,'ocelandNB').setScale(0.25);
 //
-  player = this.physics.add.sprite(30,285,'jena_idle').setScale(0.16).setSize(180,250).setOffset(40,15); // creation et definition des paramètres du personnage
+  player = this.physics.add.sprite(30,285,'jena_idleNB').setScale(0.16).setSize(180,250).setOffset(40,15); // creation et definition des paramètres du personnage
   player.setCollideWorldBounds(true);
   player.setBounce(0);
 //
@@ -156,15 +156,15 @@ create(){
   algue = algues.create(770,220,'algueNB').setScale(0.16).setSize(50,15).setOffset(145,40);
   algue = algues.create(770,200,'algueNB').setScale(0.16).setSize(50,15).setOffset(145,40);
   algue = algues.create(310,150,'algueNB').setScale(0.16).setSize(50,15).setOffset(145,40);
-  this.physics.add.collider(player, algues, plusDalgues, null, this);
+  this.physics.add.collider(player, algues, plusDalgues2, null, this);
 //
   corail = this.physics.add.staticGroup();
   corail.create(430,145,'corailNB').setScale(0.6).setSize(50,30).setOffset(15,15);
 //
   bulledevies = this.add.group();
-   bulledevie = bulledevies.create(30, 30, 'bulledevieNB').setScale(0.4).visible = false;
-   bulledevie = bulledevies.create(70, 30, 'bulledevieNB').setScale(0.4).visible = false;
-   bulledevie = bulledevies.create(110, 30, 'bulledevieNB').setScale(0.4).visible = false;
+   bulledevie1 = bulledevies.create(30, 30, 'bulledevieNB').setScale(0.4).visible = false;
+   bulledevie2 = bulledevies.create(70, 30, 'bulledevieNB').setScale(0.4).visible = false;
+   bulledevie3 = bulledevies.create(110, 30, 'bulledevieNB').setScale(0.4).visible = false;
 //
 tourbillons = this.physics.add.group();
 tourbillon = tourbillons.create(650, 145, 'tourbillon').anims.play('tourbillon').setScale(0.2);
@@ -200,35 +200,35 @@ if (tuto == 0 && displayInventaire == 0) {
   if(cursors.left.isDown && !space.isDown){ // mouvements du personnage
     player.setFlipX(true);
     idlenumber = 2; // variable pour gérer les différentes animations "idle"
-    player.anims.play('jena_lateral_swim', true);
+    player.anims.play('jena_lateral_swimNB', true);
     player.setVelocityX(-150);
     attack = 0;
   }else if(cursors.right.isDown && !space.isDown){
     player.setFlipX(false);
-    player.anims.play('jena_lateral_swim', true);
+    player.anims.play('jena_lateral_swimNB', true);
     idlenumber = 3;
     player.setVelocityX(150);
     attack = 0;
   } else if(cursors.up.isDown && !space.isDown){
-    player.anims.play('jena_swim_top', true);
+    player.anims.play('jena_swim_topNB', true);
     idlenumber = 1;
     player.setVelocityY(-150);
     attack = 0;
   } else if(cursors.down.isDown && !space.isDown){
-    player.anims.play('jena_swim_bottom', true);
+    player.anims.play('jena_swim_bottomNB', true);
     player.setVelocityY(150);
     idlenumber = 0;
     attack = 0;
   } else if (!cursors.left.isDown && !cursors.up.isDown && !cursors.right.isDown && !cursors.down.isDown && !space.isDown){
       if (idlenumber == 0) {
-        player.anims.play('jena_idle', true);
+        player.anims.play('jena_idleNB', true);
       } else if (idlenumber == 1) {
-        player.anims.play('jena_idle_top', true);
+        player.anims.play('jena_idle_topNB', true);
       } else if (idlenumber == 2) {
-        player.anims.play('jena_idle_droite', true);
+        player.anims.play('jena_idle_droiteNB', true);
         player.setFlipX(true);
       } else if (idlenumber == 3) {
-        player.anims.play('jena_idle_droite', true);
+        player.anims.play('jena_idle_droiteNB', true);
         player.setFlipX(false);
       }
     player.setVelocityX(0);
@@ -236,68 +236,25 @@ if (tuto == 0 && displayInventaire == 0) {
   }
 
   // manette
-  if (gamepad)
-    {
-        if (gamepad.left)
-        {
-          player.setFlipX(true);
-          idlenumber = 2; // variable pour gérer les différentes animations "idle"
-          player.anims.play('jena_lateral_swim', true);
-          player.setVelocityX(-150);
-        }
-        else if (gamepad.right)
-        {
-          player.setFlipX(false);
-          player.anims.play('jena_lateral_swim', true);
-          idlenumber = 3;
-          player.setVelocityX(150);
-        }
 
-        if (gamepad.up)
-        {
-          player.anims.play('jena_swim_top', true);
-          idlenumber = 1;
-          player.setVelocityY(-150);
-        }
-        else if (gamepad.down)
-        {
-          player.anims.play('jena_swim_bottom', true);
-          player.setVelocityY(150);
-          idlenumber = 0;
-        } else if (!gamepad.left && !gamepad.right && !gamepad.up && !gamepad.down){
-            if (idlenumber == 0) {
-              player.anims.play('jena_idle', true);
-            } else if (idlenumber == 1) {
-              player.anims.play('jena_idle_top', true);
-            } else if (idlenumber == 2) {
-              player.anims.play('jena_idle_droite', true);
-              player.setFlipX(true);
-            } else if (idlenumber == 3) {
-              player.anims.play('jena_idle_droite', true);
-              player.setFlipX(false);
-            }
-          player.setVelocityX(0);
-          player.setVelocityY(0);
-        }
-    }
 } // animation attaque
     if (Phaser.Input.Keyboard.JustDown(space)) {
         attack = 1;
         player.body.velocity.y = 0;
         player.body.velocity.x = 0;
       if (idlenumber == 2 || player.body.velocity.x < 0) {
-          player.anims.play('jena_attack_side', true);
+          player.anims.play('jena_attack_sideNB', true);
           player.setFlipX(true);
-          player.setSize(300,250).setOffset(-50,15);
+          player.setSize(320,50).setOffset(-80,170);
       } else if (idlenumber == 3 || player.body.velocity.x > 0) {
-          player.anims.play('jena_attack_side', true);
+          player.anims.play('jena_attack_sideNB', true);
           player.setFlipX(false);
-          player.setSize(300,250).setOffset(10,15);
+          player.setSize(320,50).setOffset(30,170);
       } else if (idlenumber == 1 || player.body.velocity.y < 0) {
-          player.anims.play('jena_attack_top', true);
+          player.anims.play('jena_attack_topNB', true);
           player.setSize(180,370).setOffset(40,-150);
       } else if (idlenumber == 0 || player.body.velocity.y > 0) {
-          player.anims.play('jena_attack_bottom', true);
+          player.anims.play('jena_attack_bottomNB', true);
           player.setSize(180,370).setOffset(40,100);
       }
     }
@@ -305,15 +262,19 @@ if (tuto == 0 && displayInventaire == 0) {
 // explications tuto
       if (player.x > 300 && player.x < 370 && player.y < 230 && player.body.velocity.y <= -150) {
         tuto = 8;
+        player.anims.play('jena_idle_topNB', true);
           tutoriel();
       } else if (player.x > 420 && player.x < 430 && player.y < 230 && player.body.velocity.x >= 150) {
           tuto = 10;
+          player.anims.play('jena_idle_topNB', true);
           tutoriel();
       } else if (player.x > 535 && player.x < 540 && player.y < 230 && player.body.velocity.x >= 150) {
           tuto = 12;
+          player.anims.play('jena_idle_topNB', true);
           tutoriel();
       } else if (player.x > 650 && player.x < 655 && player.y < 230 && player.body.velocity.x >= 150) {
         tuto = 14;
+        player.anims.play('jena_idle_topNB', true);
         tutoriel();
       }
       // Display inventaire
@@ -329,6 +290,7 @@ if (tuto == 0 && displayInventaire == 0) {
             }
         }
 // déplacement dans l'inventaire
+    if (displayInventaire == 1) {
         if (choicePosition == 0) {
               if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
                   choicePosition = 1;
@@ -426,6 +388,7 @@ if (tuto == 0 && displayInventaire == 0) {
               choice.x = 438, choice.y = 412;
           }
         }
+    }
 //
   // Changement de scène
     if (player.x >= 780) {

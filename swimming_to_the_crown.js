@@ -9,11 +9,11 @@ physics: {
         default: 'arcade',
         arcade: {
             gravity: { y: 0 },
-            debug: true
+            debug: false
         }
     },
 
-scene: [Scene0, Scene1] //Scene1, scene2
+scene: [Scene2, Scene3] //Scene1, scene2
 
 };
 
