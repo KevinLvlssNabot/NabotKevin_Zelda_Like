@@ -286,6 +286,7 @@ function bounce(){
   function kill(player, ennemi){
         this.physics.moveToObject(ennemi, player, 50);
       if (attack == 1) {
+              nbreKill++;
             ennemi.disableBody(true, true);
             drop = Phaser.Math.Between(0, 100);
             if (drop <= 20) {
@@ -294,7 +295,6 @@ function bounce(){
               corail = coraux.create(ennemi.x, ennemi.y - 10, 'corail').setScale(0.3).setSize(25,15).setOffset(30,20);
             }
       } else if (attack == 0){
-        nbreKill++;
             if (player.x < ennemi.x) {
                 player.x = player.x -20;
             } else if (player.y < ennemi.y) {
@@ -417,7 +417,7 @@ function bounce(){
   }
 //  ouverture chateau
         function openSesame(player, chateau){
-          passe++;
+          passe = 1;
             if (nbreClé < 4) {
               dialogue.visible = true; dialogue.x = 600, dialogue.y = 250;
               text.visible = true; text.x = 415, text.y = 220;
@@ -425,6 +425,7 @@ function bounce(){
               text.setText("Quatre serrures se trouvent sur les portes, trouver les clés permettraient de les ouvrir.");
               player.y = player.y + 15;
             } else if (nbreClé >= 4) {
+              passe++;
               dialogue.visible = true; dialogue.x = 600, dialogue.y = 250;
               text.visible = true; text.x = 415, text.y = 220;
               skip.visible = true; skip.x = 700, skip.y = 280;
